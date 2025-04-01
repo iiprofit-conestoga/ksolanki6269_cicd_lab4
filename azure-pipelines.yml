@@ -5,8 +5,6 @@ stages:
   - job: Build
     displayName: 'Build the Function App'
     pool:
-        name: 'Meghas-MacBook-Pro' 
-    pool:
       vmImage: 'windows-latest'
     steps:
     - task: NodeTool@0
@@ -21,8 +19,6 @@ stages:
 
 - stage: Test
   displayName: 'Test Stage'
-  pool:
-    name: 'Meghas-MacBook-Pro'
   jobs:
   - job: Test
     displayName: 'Run Unit Tests'
@@ -39,12 +35,10 @@ stages:
   - job: Deploy
     displayName: 'Deploy Function to Azure'
     pool:
-        name: 'Meghas-MacBook-Pro'
-    pool:
-      vmImage: 'windows-latest'
+      name: 'Meghas-MacBook-Pro'
     steps:
     - task: AzureFunctionApp@1
       inputs:
         azureSubscription: 'ksolanki6269_lab5'  # Replace with your Azure service connection name
-        appName: 'HttpTriggerFunction'             # Replace with your Azure Function App name
+        appName: 'HttpTriggerFunction'         # Replace with your Azure Function App name
         package: '$(System.DefaultWorkingDirectory)/**/*.zip'
