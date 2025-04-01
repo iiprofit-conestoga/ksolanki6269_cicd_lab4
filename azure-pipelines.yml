@@ -2,8 +2,6 @@ stages:
 
   - stage: Build
     displayName: 'Build Stage'
-    variables:
-      - group: build_lock
     jobs:
       - job: Build
         displayName: 'Install Dependencies'
@@ -23,8 +21,6 @@ stages:
 
   - stage: Test
     displayName: 'Test Stage'
-    variables:
-      - group: build_lock
     jobs:
       - job: Test
         displayName: 'Run Unit Tests'
@@ -36,8 +32,6 @@ stages:
 
   - stage: Deploy
     displayName: 'Deploy Stage'
-    variables:
-      - group: build_lock
     jobs:
       - deployment: DeployFunction
         displayName: 'Deploy to Azure Function App'
@@ -50,6 +44,6 @@ stages:
               steps:
                 - task: AzureFunctionApp@1
                   inputs:
-                    azureSubscription: 'ksolanki6269_lab5'  # Ensure this Service Connection exists in Azure DevOps
+                    azureSubscription: 'ksolanki6269_lab5'  # Ensure this Service Connection exists in Azure DevOp
                     appName: 'HttpTriggerFunction'  # Name of your Azure Function App
                     package: '$(Build.ArtifactStagingDirectory)'  # Path to built files
