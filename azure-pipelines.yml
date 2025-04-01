@@ -1,0 +1,44 @@
+stages:
+- stage: Build
+  displayName: 'Build Stage'
+  jobs:
+  - job: Build
+    displayName: 'Build the Function App'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '16.x' # Specify the Node.js version
+    - script: |
+        npm install
+      displayName: 'Install Dependencies'
+    - script: |
+        npm run build
+      displayName: 'Build the Azure Function'
+
+- stage: Test
+  displayName: 'Test Stage'
+  jobs:
+  - job: Test
+    displayName: 'Run Unit Tests'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - script: |
+        npm test
+      displayName: 'Run Tests'
+
+- stage: Deploy
+  displayName: 'Deploy to Azure'
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy Function to Azure'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - task: AzureFunctionApp@1
+      inputs:
+        azureSubscription: 'ksolanki6269_lab5'  # Replace with your Azure service connection name
+        appName: 'HttpTriggerFunction'             # Replace with your Azure Function App name
+        package: '$(System.DefaultWorkingDirectory)/**/*.zip'
