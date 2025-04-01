@@ -5,6 +5,8 @@ stages:
   - job: Build
     displayName: 'Build the Function App'
     pool:
+        name: 'Meghas-MacBook-Pro' 
+    pool:
       vmImage: 'windows-latest'
     steps:
     - task: NodeTool@0
@@ -19,6 +21,8 @@ stages:
 
 - stage: Test
   displayName: 'Test Stage'
+  pool:
+    name: 'Meghas-MacBook-Pro'
   jobs:
   - job: Test
     displayName: 'Run Unit Tests'
@@ -34,6 +38,8 @@ stages:
   jobs:
   - job: Deploy
     displayName: 'Deploy Function to Azure'
+    pool:
+        name: 'Meghas-MacBook-Pro'
     pool:
       vmImage: 'windows-latest'
     steps:
