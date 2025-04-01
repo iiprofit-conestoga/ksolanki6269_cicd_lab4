@@ -1,6 +1,6 @@
 const { app } = require('@azure/functions');
 
-app.http('HttpTriggerFunction', {
+app.http('ksolankiHttpTriggerFunction', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     handler: async (request, context) => {

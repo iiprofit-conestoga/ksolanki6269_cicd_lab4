@@ -42,5 +42,5 @@ stages:
                 - task: AzureFunctionApp@1
                   inputs:
                     azureSubscription: 'ksolanki6269_lab5'  # Ensure this Service Connection exists in Azure DevOp
-                    appName: 'HttpTriggerFunction'  # Name of your Azure Function App
+                    appName: 'ksolankiHttpTriggerFunction'  # Name of your Azure Function App
                     package: '$(Build.ArtifactStagingDirectory)'  # Path to built files.
