@@ -39,8 +39,18 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: AzureFunctionApp@1
+                - task: ArchiveFiles@2
+                  displayName: 'Archive function app files'
                   inputs:
-                    azureSubscription: 'ksolanki6269_lab5'  # Ensure this Service Connection exists in Azure DevOp
-                    appName: 'ksolankiHttpTriggerFunction'  # Name of your Azure Function App
-                    package: '$(Build.ArtifactStagingDirectory)'  # Path to built files.
+                    rootFolderOrFile: '$(Build.SourcesDirectory)'  # Your function app root directory
+                    includeRootFolder: false
+                    archiveFile: '$(Build.ArtifactStagingDirectory)/function.zip'
+                    verbose: true
+
+                - task: AzureFunctionApp@1
+                  displayName: 'Deploy Function to Azure'
+                  inputs:
+                    azureSubscription: 'ksolanki6269_lab5'
+                    appType: 'functionApp'
+                    appName: 'ksolankiHttpTriggerFunction'
+                    package: '$(Build.ArtifactStagingDirectory)/function.zip'  # Deploy ZIP file
